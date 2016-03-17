@@ -4,7 +4,10 @@
   "description": "A simple date picker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "react-native": "^0.21.0"
   },
   "author": "Vladimir Ivanchenko",
   "license": "ISC"
