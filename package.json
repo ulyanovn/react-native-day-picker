@@ -1,0 +1,11 @@
+{
+  "name": "react-native-day-picker",
+  "version": "0.0.1",
+  "description": "A simple date picker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vladimir Ivanchenko",
+  "license": "ISC"
+}
