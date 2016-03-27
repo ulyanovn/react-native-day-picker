@@ -1,3 +1,6 @@
 'use strict';
 
-module.epxorts = require('./src/Calendar');
+import Calendar from './src/Calendar';
+
+export default Calendar;
+module.exports = Calendar;
