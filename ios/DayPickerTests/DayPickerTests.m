@@ -16,11 +16,11 @@
 #define TIMEOUT_SECONDS 240
 #define TEXT_TO_LOOK_FOR @"Welcome to React Native!"
 
-@interface day_pickerTests : XCTestCase
+@interface DayPickerTests : XCTestCase
 
 @end
 
-@implementation day_pickerTests
+@implementation DayPickerTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

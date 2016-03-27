@@ -1,52 +1,51 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
+
 import React, {
-  AppRegistry,
-  Component,
-  StyleSheet,
-  Text,
-  View
+    Component,
+    View,
+    StyleSheet,
+    AppRegistry
 } from 'react-native';
 
+import Calendar from './src/Calendar';
+
+
 class day_picker extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
+    render() {
+        var from = new Date();
+        from.setDate(from.getDate() - 7);
+        var to = new Date();
+
+        return (
+            <View style={styles.container}>
+                <Calendar
+                    selectionType={"day, range"}
+                    selectFrom={from}
+                    selectTo={to}
+                    monthsCount={24}
+                />
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5
+    }
 });
 
 AppRegistry.registerComponent('day_picker', () => day_picker);

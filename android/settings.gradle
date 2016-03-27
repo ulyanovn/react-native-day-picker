@@ -1,3 +1,3 @@
-rootProject.name = 'day_picker'
+rootProject.name = 'DayPicker'
 
 include ':app'
