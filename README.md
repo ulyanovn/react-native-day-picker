@@ -1,12 +1,17 @@
 # react-native-day-picker
 
-react-native-day-picker is a simple calendar which allows you to select date range. Suites for android and ios 
+react-native-day-picker is a simple calendar which allows you to select date range. 
+Suites for android and ios. 
+ 
+![Demo gif](https://github.com/ivanchenko/react-native-day-picker/blob/master/example-day-picker.gif?raw=true)
 
 ## Getting Started
 
 ```sh
 $ npm install react-native-day-picker --save
 ```
+
+> **Important:** When you build app in release mode, calendar works smooth without any lags.
 
 ## Usage
 
@@ -20,8 +25,7 @@ import React, {
     AppRegistry
 } from 'react-native';
 
-import Calendar from './src/Calendar';
-
+import Calendar from 'react-native-day-picker';
 
 class DayPicker extends Component {
     render() {
