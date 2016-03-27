@@ -1,0 +1,75 @@
+# react-native-day-picker
+
+react-native-day-picker is a simple calendar which allows you to select date range. Suites for android and ios 
+
+## Getting Started
+
+```sh
+$ npm install react-native-day-picker --save
+```
+
+## Usage
+
+```javascript
+'use strict';
+
+import React, {
+    Component,
+    View,
+    StyleSheet,
+    AppRegistry
+} from 'react-native';
+
+import Calendar from './src/Calendar';
+
+
+class DayPicker extends Component {
+    render() {
+        var from = new Date();
+        from.setDate(from.getDate() - 16);
+        var to = new Date();
+
+        return (
+            <View style={styles.container}>
+                <Calendar
+                    monthsCount={24}
+                    startFormMonday={true}
+                    selectFrom={from}
+                    selectTo={to}
+                    onSelectionChange={(current, previous) => {
+                        console.log(current, previous);
+                    }}
+                />
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5'
+    }
+});
+```
+## Properties
+
+All properties are optional
+
+- **`onSelectionChange`** _(func)_
+- **`selectFrom`** _(Date)_ - first day in range that will be selected from start  
+- **`selectTo`** _(Date)_ - last day in range that will be selected from start
+
+- **`monthsCount`** _(number)_ - count of dates from current months to the last   
+- **`startFromMonday`** _(bool)_ - if true than months will started from monday
+
+- **`monthsLocale`** _(arrayOf(string))_ - array of strings for localization, which will be displayed in month header started from January
+- **`weekDaysLocale`** _(arrayOf(string))_ - array of strings for localization, which will be displayed in week day header, started from sunday
+ 
+
+## Support
+
+Email vlm.ivanchenko@gmail.com for support.

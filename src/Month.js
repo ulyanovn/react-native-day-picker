@@ -14,15 +14,21 @@ export default class Month extends Component {
     constructor(props) {
         super(props);
 
+        this.weekDaysLocale = props.weekDaysLocale.slice();
+
+        if (props.startFromMonday) {
+            this.weekDaysLocale.push(this.weekDaysLocale.shift());
+        }
+
     }
 
     render() {
         let {
             days, changeSelection, style,
-            weekDaysLocale, monthLocale
+            monthsLocale,
         } = this.props;
 
-        var monthHeader = monthLocale[days[15].getMonth()] + ' ' + days[15].getFullYear();
+        var monthHeader = monthsLocale[days[15].date.getMonth()] + ' ' + days[15].date.getFullYear();
 
         return (
             <View style={[styles.container, style]}>
@@ -30,7 +36,7 @@ export default class Month extends Component {
                     {monthHeader}
                 </Text>
                 <View style={styles.monthDays}>
-                    {weekDaysLocale.map((dayName, i) => {
+                    {this.weekDaysLocale.map((dayName, i) => {
                         return (
                             <View key={i} style={styles.weekDay}>
                                 <Text>{dayName}</Text>

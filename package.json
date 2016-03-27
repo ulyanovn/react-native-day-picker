@@ -1,6 +1,6 @@
 {
   "name": "react-native-day-picker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple date picker",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "react": "^0.14.7",
-    "react-native": "^0.22.2"
+    "react-native": ">0.14.0"
   }
 }

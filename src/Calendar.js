@@ -5,7 +5,6 @@ const {
     Component,
     ListView,
     StyleSheet,
-    PropTypes
 } = React;
 
 import Month from './Month';
@@ -15,6 +14,8 @@ console.disableYellowBox = true;
 export default class Calendar extends Component {
     static defaultProps = {
         monthsCount: 24,
+        onSelectionChange: () => {
+        },
 
         monthsLocale: ['January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'],
@@ -22,50 +23,34 @@ export default class Calendar extends Component {
     };
 
     static propTypes = {
-        selectionType: PropTypes.string,
+        selectFrom: React.PropTypes.instanceOf(Date),
+        selectTo: React.PropTypes.instanceOf(Date),
 
-        selectFrom: PropTypes.instanceof(Date),
-        selectTo: PropTypes.instanceof(Date),
+        monthsCount: React.PropTypes.number,
 
-        monthsCount: PropTypes.number,
+        monthsLocale: React.PropTypes.arrayOf(React.PropTypes.string),
+        weekDaysLocale: React.PropTypes.arrayOf(React.PropTypes.string),
+        startFromMonday: React.PropTypes.bool,
 
-        monthsLocale: PropTypes.arrayOf(PropTypes.string),
-        weekDaysLocale: PropTypes.arrayOf(PropTypes.string),
-
-        onSelectionChange: PropTypes.function
+        onSelectionChange: React.PropTypes.func
     };
-
 
     constructor(props) {
         super(props);
 
         this.changeSelection = this.changeSelection.bind(this);
+        this.generateMonths = this.generateMonths.bind(this);
 
         let {selectFrom, selectTo, monthsCount} = this.props;
+
         this.selectFrom = selectFrom;
         this.selectTo = selectTo;
-
-        var months = [];
-        var today = new Date();
-
-        for (var i = 0; i < monthsCount; i++) {
-            var month = this.getDates(today);
-            months.push(month.map((day) => {
-                return {
-                    date: day,
-                    status: this.getStatus(day, selectFrom, selectTo),
-                    disabled: day.getMonth() !== today.getMonth() || day > Date.now()
-                }
-            }));
-            today.setMonth(today.getMonth() - 1);
-        }
-
-        this.months = months;
+        this.months = this.generateMonths(monthsCount);
 
         var dataSource = new ListView.DataSource({rowHasChanged: this.rowHasChanged});
 
         this.state = {
-            dataSource: dataSource.cloneWithRows(months)
+            dataSource: dataSource.cloneWithRows(this.months)
         }
     }
 
@@ -77,12 +62,36 @@ export default class Calendar extends Component {
         }
     }
 
-    getDates(month) {
+    generateMonths(count) {
+        var months = [];
+        var monthIterator = new Date();
+
+        for (var i = 0; i < count; i++) {
+            var month = this.getDates(monthIterator, this.props.startFromMonday);
+
+            months.push(month.map((day) => {
+                return {
+                    date: day,
+                    status: this.getStatus(day, this.selectFrom, this.selectTo),
+                    disabled: day.getMonth() !== monthIterator.getMonth() || day > Date.now()
+                }
+            }));
+
+            monthIterator.setMonth(monthIterator.getMonth() - 1);
+        }
+
+        return months;
+    }
+
+    getDates(month, startFromMonday) {
         month = new Date(month);
         month.setDate(1);
 
-        var delta = month.getDay() - 1;
-        if (delta === -1) delta = 6;
+        var delta = month.getDay();
+        if (startFromMonday) {
+            delta--;
+            if (delta === -1) delta = 6;
+        }
 
         var startDate = new Date(month);
         startDate.setDate(startDate.getDate() - delta);
@@ -90,8 +99,11 @@ export default class Calendar extends Component {
         month.setMonth(month.getMonth() + 1);
         month.setDate(0);
 
-        delta = 7 - month.getDay();
-        if (delta === 7) delta = 0;
+        delta = 6 - month.getDay();
+        if (startFromMonday) {
+            delta++;
+            if (delta === 7) delta = 0;
+        }
 
         var lastDate = new Date(month);
         lastDate.setDate(lastDate.getDate() + delta);
@@ -134,7 +146,8 @@ export default class Calendar extends Component {
         this.selectTo = selectTo;
         this.months = months;
 
-        this.props.onDateChange(selectFrom, selectTo);
+        this.props.onSelectionChange(value, this.prevValue);
+        this.prevValue = value;
 
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(months)
@@ -161,17 +174,23 @@ export default class Calendar extends Component {
     }
 
     render() {
+        let {
+            style, monthsLocale, weekDaysLocale,
+            startFromMonday
+        } = this.props;
+
         return (
             <ListView
                 initialListSize={5}
                 scrollRenderAheadDistance={1200}
-                style={styles.listViewContainer}
+                style={[styles.listViewContainer, style]}
                 dataSource={this.state.dataSource}
                 renderRow={(month) => {
                     return (
                         <Month
-                            monthsLocale={this.props.monthsLocale}
-                            weekDaysLocale={this.props.weekDaysLocale}
+                            startFromMonday={startFromMonday}
+                            monthsLocale={monthsLocale}
+                            weekDaysLocale={weekDaysLocale}
                             days={month}
                             style={styles.month}
                             changeSelection={this.changeSelection}

@@ -10,19 +10,22 @@ import React, {
 import Calendar from './src/Calendar';
 
 
-class day_picker extends Component {
+class DayPicker extends Component {
     render() {
         var from = new Date();
-        from.setDate(from.getDate() - 7);
+        from.setDate(from.getDate() - 16);
         var to = new Date();
 
         return (
             <View style={styles.container}>
                 <Calendar
-                    selectionType={"day, range"}
+                    monthsCount={24}
+                    startFormMonday={true}
                     selectFrom={from}
                     selectTo={to}
-                    monthsCount={24}
+                    onSelectionChange={(current, previous) => {
+                        console.log(current, previous);
+                    }}
                 />
             </View>
         );
@@ -32,20 +35,11 @@ class day_picker extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5
+        backgroundColor: '#F5F5F5'
     }
 });
 
-AppRegistry.registerComponent('day_picker', () => day_picker);
+AppRegistry.registerComponent('DayPicker', () => DayPicker);

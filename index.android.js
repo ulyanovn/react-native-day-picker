@@ -1,8 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
+
 import React, {
   AppRegistry,
   Component,
@@ -11,7 +8,7 @@ import React, {
   View
 } from 'react-native';
 
-class day_picker extends Component {
+class DayPicker extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -48,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('day_picker', () => day_picker);
+AppRegistry.registerComponent('DayPicker', () => DayPicker);
