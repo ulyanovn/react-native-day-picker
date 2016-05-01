@@ -19,7 +19,23 @@ export default class Calendar extends Component {
 
         monthsLocale: ['January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'],
-        weekDaysLocale: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+        weekDaysLocale: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
+        bodyBackColor: 'white',
+        bodyTextColor: 'black',
+        headerSepColor: 'grey',
+
+        dayCommonBackColor: 'white',
+        dayCommonTextColor: 'black',
+
+        dayDisabledBackColor: 'white',
+        dayDisabledTextColor: 'grey',
+
+        daySelectedBackColor: '#4169e1',
+        daySelectedTextColor: 'white',
+
+        dayInRangeBackColor: '#87cefa',
+        dayInRangeTextColor: 'black'
     };
 
     static propTypes = {
@@ -32,7 +48,23 @@ export default class Calendar extends Component {
         weekDaysLocale: React.PropTypes.arrayOf(React.PropTypes.string),
         startFromMonday: React.PropTypes.bool,
 
-        onSelectionChange: React.PropTypes.func
+        onSelectionChange: React.PropTypes.func,
+
+        bodyBackColor: React.PropTypes.string,
+        bodyTextColor: React.PropTypes.string,
+        headerSepColor: React.PropTypes.string,
+
+        dayCommonBackColor: React.PropTypes.string,
+        dayCommonTextColor: React.PropTypes.string,
+
+        dayDisabledBackColor: React.PropTypes.string,
+        dayDisabledTextColor: React.PropTypes.string,
+
+        daySelectedBackColor: React.PropTypes.string,
+        daySelectedTextColor: React.PropTypes.string,
+
+        dayInRangeBackColor: React.PropTypes.string,
+        dayInRangeTextColor: React.PropTypes.string
     };
 
     constructor(props) {
@@ -179,6 +211,7 @@ export default class Calendar extends Component {
             startFromMonday
         } = this.props;
 
+
         return (
             <ListView
                 initialListSize={5}
@@ -188,6 +221,7 @@ export default class Calendar extends Component {
                 renderRow={(month) => {
                     return (
                         <Month
+                            {...this.props}
                             startFromMonday={startFromMonday}
                             monthsLocale={monthsLocale}
                             weekDaysLocale={weekDaysLocale}

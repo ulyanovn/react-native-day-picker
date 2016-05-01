@@ -11,24 +11,43 @@ const {
 export default class Day extends Component {
     render() {
         let {date, status, disabled, onDayPress} = this.props;
-        let statusStyle, onPress, textColor;
-    
+        let onPress, textColor, backColor;
+
         if (disabled) {
-            textColor = 'gray';
+            status = 'disabled';
             onPress = null;
         } else {
-            if (status === 'selected') {
-                textColor = 'white'
-            }
-            statusStyle = styles[status];
             onPress = () => {
                 onDayPress(date);
             }
         }
+
+        switch (status) {
+            case 'disabled':
+                backColor = this.props.dayDisabledBackColor;
+                textColor = this.props.dayDisabledTextColor;
+                break;
+
+            case 'common':
+                backColor = this.props.dayCommonBackColor;
+                textColor = this.props.dayCommonTextColor;
+                break;
+
+            case 'selected':
+                backColor = this.props.daySelectedBackColor;
+                textColor = this.props.daySelectedTextColor;
+                break;
+
+            case 'inRange':
+                backColor = this.props.dayInRangeBackColor;
+                textColor = this.props.dayInRangeTextColor;
+                break;
+        }
+
         return (
             <TouchableOpacity
                 activeOpacity={disabled ? 1 : 0.5}
-                style={[styles.common, statusStyle]}
+                style={[styles.common, {backgroundColor: backColor}]}
                 onPress={onPress}>
                 <Text style={{color: textColor}}>{date.getDate()}</Text>
             </TouchableOpacity>
@@ -43,11 +62,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white'
-    },
-    selected: {
-        backgroundColor: '#4169e1'
-    },
-    inRange: {
-        backgroundColor: '#87cefa'
     }
 });

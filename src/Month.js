@@ -19,27 +19,26 @@ export default class Month extends Component {
         if (props.startFromMonday) {
             this.weekDaysLocale.push(this.weekDaysLocale.shift());
         }
-
     }
 
     render() {
         let {
-            days, changeSelection, style,
-            monthsLocale,
+            days, changeSelection, style, monthsLocale,
+            bodyBackColor, bodyTextColor, headerSepColor
         } = this.props;
 
         var monthHeader = monthsLocale[days[15].date.getMonth()] + ' ' + days[15].date.getFullYear();
 
         return (
-            <View style={[styles.container, style]}>
-                <Text style={styles.monthHeader}>
+            <View style={[styles.container, style, {backgroundColor: bodyBackColor}]}>
+                <Text style={[styles.monthHeader, {color: bodyTextColor}]}>
                     {monthHeader}
                 </Text>
                 <View style={styles.monthDays}>
                     {this.weekDaysLocale.map((dayName, i) => {
                         return (
-                            <View key={i} style={styles.weekDay}>
-                                <Text>{dayName}</Text>
+                            <View key={i} style={[styles.weekDay, {borderColor: headerSepColor}]}>
+                                <Text style={{color: bodyTextColor}}>{dayName}</Text>
                             </View>
                         );
                     })}
@@ -47,6 +46,7 @@ export default class Month extends Component {
                         return (
                             <Day
                                 key={i}
+                                {...this.props}
                                 disabled={day.disabled}
                                 status={day.status}
                                 date={day.date}
@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     weekDay: {
         width: 40,
         height: 40,
-        borderColor: 'gray',
         borderBottomWidth: 1,
         justifyContent: 'center',
         alignItems: 'center'
