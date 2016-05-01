@@ -5,7 +5,7 @@ Suites for android and ios.
  
 ![Demo gif](https://github.com/ivanchenko/react-native-day-picker/blob/master/example-day-picker.gif?raw=true)
 
-## Getting Started
+### Getting Started
 
 ```sh
 $ npm install react-native-day-picker --save
@@ -13,7 +13,7 @@ $ npm install react-native-day-picker --save
 
 > **Important:** When you build app in release mode, calendar works smooth without any lags.
 
-## Usage
+### Usage
 
 ```javascript
 'use strict';
@@ -59,20 +59,46 @@ const styles = StyleSheet.create({
     }
 });
 ```
-## Properties
+### Properties
 
 All properties are optional
 
-- **`onSelectionChange`** _(func)_
-- **`selectFrom`** _(Date)_ - first day in range that will be selected from start  
-- **`selectTo`** _(Date)_ - last day in range that will be selected from start
+- **`onSelectionChange`** _(func)_ — Function which will be executed on day click. First param is clicked day date, second one previous clicked day.  
 
-- **`monthsCount`** _(number)_ - count of dates from current months to the last   
-- **`startFromMonday`** _(bool)_ - if true than months will started from monday
+- **`selectFrom`** _(Date)_ — First day in range that will be selected from start.
 
-- **`monthsLocale`** _(arrayOf(string))_ - array of strings for localization, which will be displayed in month header started from January
-- **`weekDaysLocale`** _(arrayOf(string))_ - array of strings for localization, which will be displayed in week day header, started from sunday
+- **`selectTo`** _(Date)_ — Last day in range that will be selected from start.
+
+- **`monthsCount`** _(number)_ — Count of dates from current months to the last.
+
+- **`startFromMonday`** _(bool)_ — If true than months will started from monday.
+
+- **`monthsLocale`** _(arrayOf(string))_ — Strings for localization, which will be displayed in month header started from January.
+
+- **`weekDaysLocale`** _(arrayOf(string))_ — Strings for localization, which will be displayed in week day header, started from sunday.
+
  
+- **`bodyBackColor`** _(string)_ — Calendar background color.
+
+- **`bodyTextColor`** _(string)_ — Calendar headers text color.
+
+- **`headerSepColor`** _(string)_ — Calendar header separator color.
+ 
+- **`dayCommonBackColor`** _(string)_ — Not selected day background color.
+
+- **`dayCommonTextColor`** _(string)_ — Not Selected day text color.
+ 
+- **`dayDisabledBackColor`** _(string)_ — Disabled day background color.
+
+- **`dayDisabledTextColor`** _(string)_ — Disabled day text color.
+ 
+- **`daySelectedBackColor`** _(string)_ — First and last day in range background color.
+
+- **`daySelectedTextColor`** _(string)_ — First and last day in range text color.
+ 
+- **`dayInRangeBackColor`** _(string)_ — In range day background color.
+
+- **`dayInRangeTextColor`** _(string)_ — In range day text color.
 
 ## Support
 
