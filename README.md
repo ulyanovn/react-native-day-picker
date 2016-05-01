@@ -5,7 +5,7 @@ Suites for android and ios.
  
 ![Demo gif](https://github.com/ivanchenko/react-native-day-picker/blob/master/example-day-picker.gif?raw=true)
 
-### Getting Started
+## Getting Started
 
 ```sh
 $ npm install react-native-day-picker --save
@@ -13,7 +13,7 @@ $ npm install react-native-day-picker --save
 
 > **Important:** When you build app in release mode, calendar works smooth without any lags.
 
-### Usage
+## Usage
 
 ```javascript
 'use strict';
@@ -59,11 +59,13 @@ const styles = StyleSheet.create({
     }
 });
 ```
-### Properties
+## Properties
 
 All properties are optional
 
-- **`onSelectionChange`** _(func)_ — Function which will be executed on day click. First param is clicked day date, second one previous clicked day.  
+- **`onSelectionChange`** _(func)_ — Function which will be executed on day click. First param is clicked day date, second one previous clicked day.
+
+- **`width`** _(number)_ Calendars width, should be **divided on 7 without remainder** or may cause unpredictable behaviour.
 
 - **`selectFrom`** _(Date)_ — First day in range that will be selected from start.
 
@@ -77,6 +79,7 @@ All properties are optional
 
 - **`weekDaysLocale`** _(arrayOf(string))_ — Strings for localization, which will be displayed in week day header, started from sunday.
 
+### Colors
  
 - **`bodyBackColor`** _(string)_ — Calendar background color.
 
