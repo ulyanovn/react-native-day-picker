@@ -24,20 +24,20 @@ export default class Month extends Component {
     render() {
         let {
             days, changeSelection, style, monthsLocale,
-            bodyBackColor, bodyTextColor, headerSepColor
+            bodyBackColor, bodyTextColor, headerSepColor, width
         } = this.props;
 
         var monthHeader = monthsLocale[days[15].date.getMonth()] + ' ' + days[15].date.getFullYear();
 
         return (
-            <View style={[styles.container, style, {backgroundColor: bodyBackColor}]}>
+            <View style={[style, {width: width, backgroundColor: bodyBackColor}]}>
                 <Text style={[styles.monthHeader, {color: bodyTextColor}]}>
                     {monthHeader}
                 </Text>
                 <View style={styles.monthDays}>
                     {this.weekDaysLocale.map((dayName, i) => {
                         return (
-                            <View key={i} style={[styles.weekDay, {borderColor: headerSepColor}]}>
+                            <View key={i} style={[styles.weekDay, {borderColor: headerSepColor, width: width / 7, height: width / 7}]}>
                                 <Text style={{color: bodyTextColor}}>{dayName}</Text>
                             </View>
                         );
@@ -61,9 +61,6 @@ export default class Month extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: 7 * 40
-    },
     monthHeader: {
         marginTop: 15,
         marginBottom: 5,
@@ -75,8 +72,6 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     weekDay: {
-        width: 40,
-        height: 40,
         borderBottomWidth: 1,
         justifyContent: 'center',
         alignItems: 'center'

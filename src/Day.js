@@ -10,7 +10,7 @@ const {
 
 export default class Day extends Component {
     render() {
-        let {date, status, disabled, onDayPress} = this.props;
+        let {date, status, disabled, onDayPress, width} = this.props;
         let onPress, textColor, backColor;
 
         if (disabled) {
@@ -47,7 +47,7 @@ export default class Day extends Component {
         return (
             <TouchableOpacity
                 activeOpacity={disabled ? 1 : 0.5}
-                style={[styles.common, {backgroundColor: backColor}]}
+                style={[styles.common, {backgroundColor: backColor, width: width / 7, height: width / 7}]}
                 onPress={onPress}>
                 <Text style={{color: textColor}}>{date.getDate()}</Text>
             </TouchableOpacity>
@@ -57,8 +57,6 @@ export default class Day extends Component {
 
 const styles = StyleSheet.create({
     common: {
-        width: 40,
-        height: 40,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white'

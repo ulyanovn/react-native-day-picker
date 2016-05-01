@@ -21,6 +21,8 @@ export default class Calendar extends Component {
             'July', 'August', 'September', 'October', 'November', 'December'],
         weekDaysLocale: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
+        width: 280,
+
         bodyBackColor: 'white',
         bodyTextColor: 'black',
         headerSepColor: 'grey',
@@ -49,6 +51,8 @@ export default class Calendar extends Component {
         startFromMonday: React.PropTypes.bool,
 
         onSelectionChange: React.PropTypes.func,
+        
+        width: React.PropTypes.number,
 
         bodyBackColor: React.PropTypes.string,
         bodyTextColor: React.PropTypes.string,
@@ -206,11 +210,7 @@ export default class Calendar extends Component {
     }
 
     render() {
-        let {
-            style, monthsLocale, weekDaysLocale,
-            startFromMonday
-        } = this.props;
-
+        let {style} = this.props;
 
         return (
             <ListView
@@ -222,9 +222,6 @@ export default class Calendar extends Component {
                     return (
                         <Month
                             {...this.props}
-                            startFromMonday={startFromMonday}
-                            monthsLocale={monthsLocale}
-                            weekDaysLocale={weekDaysLocale}
                             days={month}
                             style={styles.month}
                             changeSelection={this.changeSelection}

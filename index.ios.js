@@ -23,6 +23,7 @@ class DayPicker extends Component {
                     startFormMonday={true}
                     selectFrom={from}
                     selectTo={to}
+                    width={350}
                     onSelectionChange={(current, previous) => {
                         console.log(current, previous);
                     }}
