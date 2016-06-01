@@ -5,7 +5,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     Text
-} from "react-native";
+} from 'react-native';
 
 export default class Day extends React.Component {
     render() {

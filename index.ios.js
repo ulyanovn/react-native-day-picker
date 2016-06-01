@@ -4,9 +4,8 @@ import React from 'react';
 import {   
     View,
     StyleSheet,
-    
     AppRegistry
-} from "react-native";
+} from 'react-native';
 
 import Calendar from './src/Calendar';
 

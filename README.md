@@ -13,13 +13,16 @@ $ npm install react-native-day-picker --save
 
 > **Important:** When you build app in release mode, calendar works smooth without any lags.
 
+> **Note:** If you use react-native v0.24 or lower install version 1.0.0 
+
 ## Usage
 
 ```javascript
 'use strict';
 
-import React, {
-    Component,
+import React from 'react';
+
+import {
     View,
     StyleSheet,
     AppRegistry
@@ -27,7 +30,7 @@ import React, {
 
 import Calendar from 'react-native-day-picker';
 
-class DayPicker extends Component {
+class DayPicker extends React.Component {
     render() {
         var from = new Date();
         from.setDate(from.getDate() - 16);

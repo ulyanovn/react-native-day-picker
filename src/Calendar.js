@@ -4,7 +4,7 @@ import React from 'react';
 import {
     ListView,
     StyleSheet,
-} from "react-native";
+} from 'react-native';
 
 import Month from './Month';
 

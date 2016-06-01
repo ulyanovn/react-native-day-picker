@@ -5,7 +5,7 @@ import {
     View,
     StyleSheet,
     Text    
-} from "react-native";
+} from 'react-native';
 import Day from './Day'
 
 export default class Month extends React.Component {
