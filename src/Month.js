@@ -1,16 +1,14 @@
 'use strict';
 
-import React from 'react-native';
-const {
-    Component,
+import React from 'react';
+import {
     View,
     StyleSheet,
-    Text
-} = React;
-
+    Text    
+} from "react-native";
 import Day from './Day'
 
-export default class Month extends Component {
+export default class Month extends React.Component {
     constructor(props) {
         super(props);
 

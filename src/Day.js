@@ -1,14 +1,13 @@
 'use strict';
 
-import React from 'react-native';
-const {
-    Component,
+import React from 'react';
+import {
     StyleSheet,
     TouchableOpacity,
     Text
-} = React;
+} from "react-native";
 
-export default class Day extends Component {
+export default class Day extends React.Component {
     render() {
         let {date, status, disabled, onDayPress, width} = this.props;
         let onPress, textColor, backColor;
