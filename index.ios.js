@@ -1,16 +1,17 @@
 'use strict';
 
-import React, {
-    Component,
+import React from 'react';
+import {   
     View,
     StyleSheet,
+    
     AppRegistry
-} from 'react-native';
+} from "react-native";
 
 import Calendar from './src/Calendar';
 
 
-class DayPicker extends Component {
+class DayPicker extends React.Component {
     render() {
         var from = new Date();
         from.setDate(from.getDate() - 16);

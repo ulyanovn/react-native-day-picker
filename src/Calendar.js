@@ -1,17 +1,16 @@
 'use strict';
 
-import React from 'react-native';
-const {
-    Component,
+import React from 'react';
+import {
     ListView,
     StyleSheet,
-} = React;
+} from "react-native";
 
 import Month from './Month';
 
 console.disableYellowBox = true;
 
-export default class Calendar extends Component {
+export default class Calendar extends React.Component {
     static defaultProps = {
         monthsCount: 24,
         onSelectionChange: () => {
