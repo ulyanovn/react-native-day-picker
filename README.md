@@ -1,6 +1,6 @@
 # react-native-day-picker
 
-react-native-day-picker is a simple calendar which allows you to select date range. 
+react-native-day-picker is a simple calendar which allows you select date range. 
 Suites for android and ios. 
  
 ![Demo gif](https://github.com/ivanchenko/react-native-day-picker/blob/master/example-day-picker.gif?raw=true)
@@ -21,14 +21,14 @@ $ npm install react-native-day-picker --save
 'use strict';
 
 import React from 'react';
-
 import {
     View,
     StyleSheet,
     AppRegistry
 } from 'react-native';
 
-import Calendar from 'react-native-day-picker';
+import Calendar from './src/Calendar';
+
 
 class DayPicker extends React.Component {
     render() {
@@ -36,13 +36,18 @@ class DayPicker extends React.Component {
         from.setDate(from.getDate() - 16);
         var to = new Date();
 
+        var startDate = new Date();
+        startDate.setMonth(startDate.getMonth() + 1);
+
         return (
             <View style={styles.container}>
                 <Calendar
                     monthsCount={24}
                     startFormMonday={true}
+                    startDate={startDate}
                     selectFrom={from}
                     selectTo={to}
+                    width={350}
                     onSelectionChange={(current, previous) => {
                         console.log(current, previous);
                     }}
@@ -67,6 +72,8 @@ const styles = StyleSheet.create({
 All properties are optional
 
 - **`onSelectionChange`** _(func)_ — Function which will be executed on day click. First param is clicked day date, second one previous clicked day.
+
+- **`startDate`** _(Date)_ — Date from which you can select dates. By default is **new Date()**.
 
 - **`width`** _(number)_ Calendars width, should be **divided on 7 without remainder** or may cause unpredictable behaviour.
 

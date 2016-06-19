@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {   
+import {
     View,
     StyleSheet,
     AppRegistry
@@ -16,11 +16,15 @@ class DayPicker extends React.Component {
         from.setDate(from.getDate() - 16);
         var to = new Date();
 
+        var startDate = new Date();
+        startDate.setMonth(startDate.getMonth() + 1);
+
         return (
             <View style={styles.container}>
                 <Calendar
                     monthsCount={24}
                     startFormMonday={true}
+                    startDate={startDate}
                     selectFrom={from}
                     selectTo={to}
                     width={350}

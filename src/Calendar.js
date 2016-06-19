@@ -1,6 +1,8 @@
 'use strict';
 
-import React from 'react';
+import React, {
+    PropTypes
+} from 'react';
 import {
     ListView,
     StyleSheet,
@@ -12,6 +14,7 @@ console.disableYellowBox = true;
 
 export default class Calendar extends React.Component {
     static defaultProps = {
+        startDate: new Date(),
         monthsCount: 24,
         onSelectionChange: () => {
         },
@@ -40,34 +43,35 @@ export default class Calendar extends React.Component {
     };
 
     static propTypes = {
-        selectFrom: React.PropTypes.instanceOf(Date),
-        selectTo: React.PropTypes.instanceOf(Date),
+        selectFrom: PropTypes.instanceOf(Date),
+        selectTo: PropTypes.instanceOf(Date),
 
-        monthsCount: React.PropTypes.number,
+        monthsCount: PropTypes.number,
+        startDate: PropTypes.instanceOf(Date),
 
-        monthsLocale: React.PropTypes.arrayOf(React.PropTypes.string),
-        weekDaysLocale: React.PropTypes.arrayOf(React.PropTypes.string),
-        startFromMonday: React.PropTypes.bool,
+        monthsLocale: PropTypes.arrayOf(PropTypes.string),
+        weekDaysLocale: PropTypes.arrayOf(PropTypes.string),
+        startFromMonday: PropTypes.bool,
 
-        onSelectionChange: React.PropTypes.func,
-        
-        width: React.PropTypes.number,
+        onSelectionChange: PropTypes.func,
 
-        bodyBackColor: React.PropTypes.string,
-        bodyTextColor: React.PropTypes.string,
-        headerSepColor: React.PropTypes.string,
+        width: PropTypes.number,
 
-        dayCommonBackColor: React.PropTypes.string,
-        dayCommonTextColor: React.PropTypes.string,
+        bodyBackColor: PropTypes.string,
+        bodyTextColor: PropTypes.string,
+        headerSepColor: PropTypes.string,
 
-        dayDisabledBackColor: React.PropTypes.string,
-        dayDisabledTextColor: React.PropTypes.string,
+        dayCommonBackColor: PropTypes.string,
+        dayCommonTextColor: PropTypes.string,
 
-        daySelectedBackColor: React.PropTypes.string,
-        daySelectedTextColor: React.PropTypes.string,
+        dayDisabledBackColor: PropTypes.string,
+        dayDisabledTextColor: PropTypes.string,
 
-        dayInRangeBackColor: React.PropTypes.string,
-        dayInRangeTextColor: React.PropTypes.string
+        daySelectedBackColor: PropTypes.string,
+        daySelectedTextColor: PropTypes.string,
+
+        dayInRangeBackColor: PropTypes.string,
+        dayInRangeTextColor: PropTypes.string
     };
 
     constructor(props) {
@@ -76,11 +80,11 @@ export default class Calendar extends React.Component {
         this.changeSelection = this.changeSelection.bind(this);
         this.generateMonths = this.generateMonths.bind(this);
 
-        let {selectFrom, selectTo, monthsCount} = this.props;
+        let {selectFrom, selectTo, monthsCount, startDate} = this.props;
 
         this.selectFrom = selectFrom;
         this.selectTo = selectTo;
-        this.months = this.generateMonths(monthsCount);
+        this.months = this.generateMonths(monthsCount, startDate);
 
         var dataSource = new ListView.DataSource({rowHasChanged: this.rowHasChanged});
 
@@ -97,9 +101,9 @@ export default class Calendar extends React.Component {
         }
     }
 
-    generateMonths(count) {
+    generateMonths(count, startDate) {
         var months = [];
-        var monthIterator = new Date();
+        var monthIterator = startDate;
 
         for (var i = 0; i < count; i++) {
             var month = this.getDates(monthIterator, this.props.startFromMonday);
@@ -108,7 +112,7 @@ export default class Calendar extends React.Component {
                 return {
                     date: day,
                     status: this.getStatus(day, this.selectFrom, this.selectTo),
-                    disabled: day.getMonth() !== monthIterator.getMonth() || day > Date.now()
+                    disabled: day.getMonth() !== monthIterator.getMonth() || day > startDate
                 }
             }));
 

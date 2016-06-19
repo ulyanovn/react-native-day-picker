@@ -4,7 +4,7 @@ import React from 'react';
 import {
     View,
     StyleSheet,
-    Text    
+    Text
 } from 'react-native';
 import Day from './Day'
 
@@ -35,7 +35,8 @@ export default class Month extends React.Component {
                 <View style={styles.monthDays}>
                     {this.weekDaysLocale.map((dayName, i) => {
                         return (
-                            <View key={i} style={[styles.weekDay, {borderColor: headerSepColor, width: width / 7, height: width / 7}]}>
+                            <View key={i}
+                                  style={[styles.weekDay, {borderColor: headerSepColor, width: width / 7, height: width / 7}]}>
                                 <Text style={{color: bodyTextColor}}>{dayName}</Text>
                             </View>
                         );
