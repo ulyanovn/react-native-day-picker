@@ -105,6 +105,8 @@ export default class Calendar extends React.Component {
         var months = [];
         var monthIterator = startDate;
 
+        var startUTC = Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate());
+
         for (var i = 0; i < count; i++) {
             var month = this.getDates(monthIterator, this.props.startFromMonday);
 
@@ -112,7 +114,9 @@ export default class Calendar extends React.Component {
                 return {
                     date: day,
                     status: this.getStatus(day, this.selectFrom, this.selectTo),
-                    disabled: day.getMonth() !== monthIterator.getMonth() || day > startDate
+                    disabled: day.getMonth() !== monthIterator.getMonth()
+                    || startUTC < Date.UTC(day.getYear(), day.getMonth(), day.getDate())
+
                 }
             }));
 
