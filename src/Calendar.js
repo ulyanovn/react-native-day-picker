@@ -39,7 +39,9 @@ export default class Calendar extends React.Component {
         daySelectedTextColor: 'white',
 
         dayInRangeBackColor: '#87cefa',
-        dayInRangeTextColor: 'black'
+        dayInRangeTextColor: 'black',
+
+        isFutureDate: false
     };
 
     static propTypes = {
@@ -71,7 +73,9 @@ export default class Calendar extends React.Component {
         daySelectedTextColor: PropTypes.string,
 
         dayInRangeBackColor: PropTypes.string,
-        dayInRangeTextColor: PropTypes.string
+        dayInRangeTextColor: PropTypes.string,
+
+        isFutureDate: PropTypes.bool
     };
 
     constructor(props) {
@@ -103,6 +107,7 @@ export default class Calendar extends React.Component {
 
     generateMonths(count, startDate) {
         var months = [];
+        var dateUTC;
         var monthIterator = startDate;
 
         var startUTC = Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate());
@@ -111,16 +116,22 @@ export default class Calendar extends React.Component {
             var month = this.getDates(monthIterator, this.props.startFromMonday);
 
             months.push(month.map((day) => {
+                dateUTC = Date.UTC(day.getYear(), day.getMonth(), day.getDate());
                 return {
                     date: day,
                     status: this.getStatus(day, this.selectFrom, this.selectTo),
                     disabled: day.getMonth() !== monthIterator.getMonth()
-                    || startUTC < Date.UTC(day.getYear(), day.getMonth(), day.getDate())
+                    || (this.props.isFutureDate) ? startUTC > dateUTC : startUTC < dateUTC
 
                 }
             }));
 
-            monthIterator.setMonth(monthIterator.getMonth() - 1);
+            if(this.props.isFutureDate){
+                monthIterator.setMonth(monthIterator.getMonth() + 1);
+            }else{
+                monthIterator.setMonth(monthIterator.getMonth() - 1);
+            }
+            
         }
 
         return months;
@@ -218,19 +229,26 @@ export default class Calendar extends React.Component {
 
     render() {
         let {style} = this.props;
+        let directionStyles = {};
+
+        if(!this.props.isFutureDate){
+            directionStyles = {
+                transform: [{scaleY: -1}]
+            }
+        }
 
         return (
             <ListView
                 initialListSize={5}
                 scrollRenderAheadDistance={1200}
-                style={[styles.listViewContainer, style]}
+                style={[styles.listViewContainer, directionStyles, style]}
                 dataSource={this.state.dataSource}
                 renderRow={(month) => {
                     return (
                         <Month
                             {...this.props}
                             days={month}
-                            style={styles.month}
+                            style={[styles.month, directionStyles]}
                             changeSelection={this.changeSelection}
                         />
                     );
@@ -244,9 +262,7 @@ const styles = StyleSheet.create({
     listViewContainer: {
         backgroundColor: 'white',
         alignSelf: 'center',
-        transform: [{scaleY: -1}]
     },
     month: {
-        transform: [{scaleY: -1}]
     }
 });
