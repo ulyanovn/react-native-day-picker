@@ -41,7 +41,8 @@ export default class Calendar extends React.Component {
         dayInRangeBackColor: '#87cefa',
         dayInRangeTextColor: 'black',
 
-        isFutureDate: false
+        isFutureDate: false,
+        rangeSelect: true
     };
 
     static propTypes = {
@@ -75,7 +76,8 @@ export default class Calendar extends React.Component {
         dayInRangeBackColor: PropTypes.string,
         dayInRangeTextColor: PropTypes.string,
 
-        isFutureDate: PropTypes.bool
+        isFutureDate: PropTypes.bool,
+        rangeSelect: PropTypes.bool
     };
 
     constructor(props) {
@@ -109,11 +111,12 @@ export default class Calendar extends React.Component {
         var months = [];
         var dateUTC;
         var monthIterator = startDate;
+        var {isFutureDate, startFromMonday} = this.props;
 
         var startUTC = Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate());
 
         for (var i = 0; i < count; i++) {
-            var month = this.getDates(monthIterator, this.props.startFromMonday);
+            var month = this.getDates(monthIterator, startFromMonday);
 
             months.push(month.map((day) => {
                 dateUTC = Date.UTC(day.getYear(), day.getMonth(), day.getDate());
@@ -121,17 +124,15 @@ export default class Calendar extends React.Component {
                     date: day,
                     status: this.getStatus(day, this.selectFrom, this.selectTo),
                     disabled: day.getMonth() !== monthIterator.getMonth()
-                    || ((this.props.isFutureDate) ? startUTC > dateUTC : startUTC < dateUTC)
-
+                    || ((isFutureDate) ? startUTC > dateUTC : startUTC < dateUTC)
                 }
             }));
 
-            if (this.props.isFutureDate) {
-                monthIterator.setMonth(monthIterator.getMonth() + 1);
+            if (isFutureDate) {
+                monthIterator.setMonth(monthIterator.getMonth());
             } else {
                 monthIterator.setMonth(monthIterator.getMonth() - 1);
             }
-
         }
 
         return months;
@@ -196,8 +197,13 @@ export default class Calendar extends React.Component {
             })
         });
 
-        this.selectFrom = selectFrom;
-        this.selectTo = selectTo;
+        if (this.props.rangeSelect) {
+            this.selectFrom = selectFrom;
+            this.selectTo = selectTo;
+        } else {
+            this.selectFrom = this.selectTo = selectFrom;
+        }
+
         this.months = months;
 
         this.props.onSelectionChange(value, this.prevValue);
@@ -228,10 +234,10 @@ export default class Calendar extends React.Component {
     }
 
     render() {
-        let {style} = this.props;
+        let {style, isFutureDate} = this.props;
         let directionStyles = {};
 
-        if (!this.props.isFutureDate) {
+        if (!isFutureDate) {
             directionStyles = {
                 transform: [{scaleY: -1}]
             }
