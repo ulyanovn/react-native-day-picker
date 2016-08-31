@@ -39,7 +39,9 @@ export default class Calendar extends React.Component {
         daySelectedTextColor: 'white',
 
         dayInRangeBackColor: '#87cefa',
-        dayInRangeTextColor: 'black'
+        dayInRangeTextColor: 'black',
+
+        rangeSelect: true
     };
 
     static propTypes = {
@@ -71,7 +73,9 @@ export default class Calendar extends React.Component {
         daySelectedTextColor: PropTypes.string,
 
         dayInRangeBackColor: PropTypes.string,
-        dayInRangeTextColor: PropTypes.string
+        dayInRangeTextColor: PropTypes.string,
+
+        rangeSelect: PropTypes.bool
     };
 
     constructor(props) {
@@ -185,8 +189,13 @@ export default class Calendar extends React.Component {
             })
         });
 
-        this.selectFrom = selectFrom;
-        this.selectTo = selectTo;
+        if (this.props.rangeSelect) {
+            this.selectFrom = selectFrom;
+            this.selectTo = selectTo;
+        } else {
+            this.selectFrom = this.selectTo = selectFrom;    
+        }
+
         this.months = months;
 
         this.props.onSelectionChange(value, this.prevValue);
