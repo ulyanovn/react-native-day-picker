@@ -129,7 +129,7 @@ export default class Calendar extends React.Component {
             }));
 
             if (isFutureDate) {
-                monthIterator.setMonth(monthIterator.getMonth());
+                monthIterator.setMonth(monthIterator.getMonth() + 1);
             } else {
                 monthIterator.setMonth(monthIterator.getMonth() - 1);
             }
