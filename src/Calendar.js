@@ -10,7 +10,6 @@ import {
 
 import Month    from './Month';
 
-console.disableYellowBox = true;
 
 export default class Calendar extends React.Component {
 	static defaultProps = {
