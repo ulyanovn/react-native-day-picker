@@ -1,273 +1,277 @@
 'use strict';
 
 import React, {
-    PropTypes
-} from 'react';
+	PropTypes
+}               from 'react';
 import {
-    ListView,
-    StyleSheet,
-} from 'react-native';
+	ListView,
+	StyleSheet,
+}               from 'react-native';
 
-import Month from './Month';
+import Month    from './Month';
 
 console.disableYellowBox = true;
 
 export default class Calendar extends React.Component {
-    static defaultProps = {
-        startDate: new Date(),
-        monthsCount: 24,
-        onSelectionChange: () => {
-        },
+	static defaultProps = {
+		startDate: new Date(),
+		monthsCount: 24,
+		onSelectionChange: () => {
+		},
 
-        monthsLocale: ['January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'],
-        weekDaysLocale: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+		monthsLocale: ['January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'],
+		weekDaysLocale: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
-        width: 280,
+		width: 280,
 
-        bodyBackColor: 'white',
-        bodyTextColor: 'black',
-        headerSepColor: 'grey',
+		bodyBackColor: 'white',
+		bodyTextColor: 'black',
+		headerSepColor: 'grey',
 
-        dayCommonBackColor: 'white',
-        dayCommonTextColor: 'black',
+		monthTextColor: 'black',
 
-        dayDisabledBackColor: 'white',
-        dayDisabledTextColor: 'grey',
+		dayCommonBackColor: 'white',
+		dayCommonTextColor: 'black',
 
-        daySelectedBackColor: '#4169e1',
-        daySelectedTextColor: 'white',
+		dayDisabledBackColor: 'white',
+		dayDisabledTextColor: 'grey',
 
-        dayInRangeBackColor: '#87cefa',
-        dayInRangeTextColor: 'black',
+		daySelectedBackColor: '#4169e1',
+		daySelectedTextColor: 'white',
 
-        isFutureDate: false,
-        rangeSelect: true
-    };
+		dayInRangeBackColor: '#87cefa',
+		dayInRangeTextColor: 'black',
 
-    static propTypes = {
-        selectFrom: PropTypes.instanceOf(Date),
-        selectTo: PropTypes.instanceOf(Date),
+		isFutureDate: false,
+		rangeSelect: true
+	};
 
-        monthsCount: PropTypes.number,
-        startDate: PropTypes.instanceOf(Date),
+	static propTypes = {
+		selectFrom: PropTypes.instanceOf(Date),
+		selectTo: PropTypes.instanceOf(Date),
 
-        monthsLocale: PropTypes.arrayOf(PropTypes.string),
-        weekDaysLocale: PropTypes.arrayOf(PropTypes.string),
-        startFromMonday: PropTypes.bool,
+		monthsCount: PropTypes.number,
+		startDate: PropTypes.instanceOf(Date),
 
-        onSelectionChange: PropTypes.func,
+		monthsLocale: PropTypes.arrayOf(PropTypes.string),
+		weekDaysLocale: PropTypes.arrayOf(PropTypes.string),
+		startFromMonday: PropTypes.bool,
 
-        width: PropTypes.number,
+		onSelectionChange: PropTypes.func,
 
-        bodyBackColor: PropTypes.string,
-        bodyTextColor: PropTypes.string,
-        headerSepColor: PropTypes.string,
+		width: PropTypes.number,
 
-        dayCommonBackColor: PropTypes.string,
-        dayCommonTextColor: PropTypes.string,
+		bodyBackColor: PropTypes.string,
+		bodyTextColor: PropTypes.string,
+		headerSepColor: PropTypes.string,
 
-        dayDisabledBackColor: PropTypes.string,
-        dayDisabledTextColor: PropTypes.string,
+		monthTextColor: PropTypes.string,
 
-        daySelectedBackColor: PropTypes.string,
-        daySelectedTextColor: PropTypes.string,
+		dayCommonBackColor: PropTypes.string,
+		dayCommonTextColor: PropTypes.string,
 
-        dayInRangeBackColor: PropTypes.string,
-        dayInRangeTextColor: PropTypes.string,
+		dayDisabledBackColor: PropTypes.string,
+		dayDisabledTextColor: PropTypes.string,
 
-        isFutureDate: PropTypes.bool,
-        rangeSelect: PropTypes.bool
-    };
+		daySelectedBackColor: PropTypes.string,
+		daySelectedTextColor: PropTypes.string,
 
-    constructor(props) {
-        super(props);
+		dayInRangeBackColor: PropTypes.string,
+		dayInRangeTextColor: PropTypes.string,
 
-        this.changeSelection = this.changeSelection.bind(this);
-        this.generateMonths = this.generateMonths.bind(this);
+		isFutureDate: PropTypes.bool,
+		rangeSelect: PropTypes.bool
+	};
 
-        let {selectFrom, selectTo, monthsCount, startDate} = this.props;
+	constructor(props) {
+		super(props);
 
-        this.selectFrom = selectFrom;
-        this.selectTo = selectTo;
-        this.months = this.generateMonths(monthsCount, startDate);
+		this.changeSelection = this.changeSelection.bind(this);
+		this.generateMonths = this.generateMonths.bind(this);
 
-        var dataSource = new ListView.DataSource({rowHasChanged: this.rowHasChanged});
+		let {selectFrom, selectTo, monthsCount, startDate} = this.props;
 
-        this.state = {
-            dataSource: dataSource.cloneWithRows(this.months)
-        }
-    }
+		this.selectFrom = selectFrom;
+		this.selectTo = selectTo;
+		this.months = this.generateMonths(monthsCount, startDate);
 
-    rowHasChanged(r1, r2) {
-        for (var i = 0; i < r1.length; i++) {
-            if (r1[i].status !== r2[i].status && !r1[i].disabled) {
-                return true;
-            }
-        }
-    }
+		var dataSource = new ListView.DataSource({rowHasChanged: this.rowHasChanged});
 
-    generateMonths(count, startDate) {
-        var months = [];
-        var dateUTC;
-        var monthIterator = startDate;
-        var {isFutureDate, startFromMonday} = this.props;
+		this.state = {
+			dataSource: dataSource.cloneWithRows(this.months)
+		}
+	}
 
-        var startUTC = Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate());
+	rowHasChanged(r1, r2) {
+		for (var i = 0; i < r1.length; i++) {
+			if (r1[i].status !== r2[i].status && !r1[i].disabled) {
+				return true;
+			}
+		}
+	}
 
-        for (var i = 0; i < count; i++) {
-            var month = this.getDates(monthIterator, startFromMonday);
+	generateMonths(count, startDate) {
+		var months = [];
+		var dateUTC;
+		var monthIterator = startDate;
+		var {isFutureDate, startFromMonday} = this.props;
 
-            months.push(month.map((day) => {
-                dateUTC = Date.UTC(day.getYear(), day.getMonth(), day.getDate());
-                return {
-                    date: day,
-                    status: this.getStatus(day, this.selectFrom, this.selectTo),
-                    disabled: day.getMonth() !== monthIterator.getMonth()
-                    || ((isFutureDate) ? startUTC > dateUTC : startUTC < dateUTC)
-                }
-            }));
+		var startUTC = Date.UTC(startDate.getYear(), startDate.getMonth(), startDate.getDate());
 
-            if (isFutureDate) {
-                monthIterator.setMonth(monthIterator.getMonth() + 1);
-            } else {
-                monthIterator.setMonth(monthIterator.getMonth() - 1);
-            }
-        }
+		for (var i = 0; i < count; i++) {
+			var month = this.getDates(monthIterator, startFromMonday);
 
-        return months;
-    }
+			months.push(month.map((day) => {
+				dateUTC = Date.UTC(day.getYear(), day.getMonth(), day.getDate());
+				return {
+					date: day,
+					status: this.getStatus(day, this.selectFrom, this.selectTo),
+					disabled: day.getMonth() !== monthIterator.getMonth()
+					|| ((isFutureDate) ? startUTC > dateUTC : startUTC < dateUTC)
+				}
+			}));
 
-    getDates(month, startFromMonday) {
-        month = new Date(month);
-        month.setDate(1);
+			if (isFutureDate) {
+				monthIterator.setMonth(monthIterator.getMonth() + 1);
+			} else {
+				monthIterator.setMonth(monthIterator.getMonth() - 1);
+			}
+		}
 
-        var delta = month.getDay();
-        if (startFromMonday) {
-            delta--;
-            if (delta === -1) delta = 6;
-        }
+		return months;
+	}
 
-        var startDate = new Date(month);
-        startDate.setDate(startDate.getDate() - delta);
+	getDates(month, startFromMonday) {
+		month = new Date(month);
+		month.setDate(1);
 
-        month.setMonth(month.getMonth() + 1);
-        month.setDate(0);
+		var delta = month.getDay();
+		if (startFromMonday) {
+			delta--;
+			if (delta === -1) delta = 6;
+		}
 
-        delta = 6 - month.getDay();
-        if (startFromMonday) {
-            delta++;
-            if (delta === 7) delta = 0;
-        }
+		var startDate = new Date(month);
+		startDate.setDate(startDate.getDate() - delta);
 
-        var lastDate = new Date(month);
-        lastDate.setDate(lastDate.getDate() + delta);
+		month.setMonth(month.getMonth() + 1);
+		month.setDate(0);
 
-        var allDates = [];
-        while (startDate <= lastDate) {
-            allDates.push(new Date(startDate));
-            startDate.setDate(startDate.getDate() + 1);
-        }
-        return allDates;
-    }
+		delta = 6 - month.getDay();
+		if (startFromMonday) {
+			delta++;
+			if (delta === 7) delta = 0;
+		}
 
-    changeSelection(value) {
-        var {selectFrom, selectTo, months} = this;
+		var lastDate = new Date(month);
+		lastDate.setDate(lastDate.getDate() + delta);
 
-        if (!selectFrom) {
-            selectFrom = value;
-        } else if (!selectTo) {
-            if (value > selectFrom) {
-                selectTo = value;
-            } else {
-                selectFrom = value;
-            }
-        } else if (selectFrom && selectTo) {
-            selectFrom = value;
-            selectTo = null;
-        }
+		var allDates = [];
+		while (startDate <= lastDate) {
+			allDates.push(new Date(startDate));
+			startDate.setDate(startDate.getDate() + 1);
+		}
+		return allDates;
+	}
 
-        months = months.map((month) => {
-            return month.map((day) => {
-                return {
-                    date: day.date,
-                    status: this.getStatus(day.date, selectFrom, selectTo),
-                    disabled: day.disabled
-                }
-            })
-        });
+	changeSelection(value) {
+		var {selectFrom, selectTo, months} = this;
 
-        if (this.props.rangeSelect) {
-            this.selectFrom = selectFrom;
-            this.selectTo = selectTo;
-        } else {
-            this.selectFrom = this.selectTo = selectFrom;
-        }
+		if (!selectFrom) {
+			selectFrom = value;
+		} else if (!selectTo) {
+			if (value > selectFrom) {
+				selectTo = value;
+			} else {
+				selectFrom = value;
+			}
+		} else if (selectFrom && selectTo) {
+			selectFrom = value;
+			selectTo = null;
+		}
 
-        this.months = months;
+		months = months.map((month) => {
+			return month.map((day) => {
+				return {
+					date: day.date,
+					status: this.getStatus(day.date, selectFrom, selectTo),
+					disabled: day.disabled
+				}
+			})
+		});
 
-        this.props.onSelectionChange(value, this.prevValue);
-        this.prevValue = value;
+		if (this.props.rangeSelect) {
+			this.selectFrom = selectFrom;
+			this.selectTo = selectTo;
+		} else {
+			this.selectFrom = this.selectTo = selectFrom;
+		}
 
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(months)
-        })
-    }
+		this.months = months;
 
-    getStatus(date, selectFrom, selectTo) {
-        if (selectFrom) {
-            if (selectFrom.toDateString() === date.toDateString()) {
-                return 'selected';
-            }
-        }
-        if (selectTo) {
-            if (selectTo.toDateString() === date.toDateString()) {
-                return 'selected';
-            }
-        }
-        if (selectFrom && selectTo) {
-            if (selectFrom < date && date < selectTo) {
-                return 'inRange';
-            }
-        }
-        return 'common';
-    }
+		this.props.onSelectionChange(value, this.prevValue);
+		this.prevValue = value;
 
-    render() {
-        let {style, isFutureDate} = this.props;
-        let directionStyles = {};
+		this.setState({
+			dataSource: this.state.dataSource.cloneWithRows(months)
+		});
+	}
 
-        if (!isFutureDate) {
-            directionStyles = {
-                transform: [{scaleY: -1}]
-            }
-        }
+	getStatus(date, selectFrom, selectTo) {
+		if (selectFrom) {
+			if (selectFrom.toDateString() === date.toDateString()) {
+				return 'selected';
+			}
+		}
+		if (selectTo) {
+			if (selectTo.toDateString() === date.toDateString()) {
+				return 'selected';
+			}
+		}
+		if (selectFrom && selectTo) {
+			if (selectFrom < date && date < selectTo) {
+				return 'inRange';
+			}
+		}
+		return 'common';
+	}
 
-        return (
-            <ListView
-                initialListSize={5}
-                scrollRenderAheadDistance={1200}
-                style={[styles.listViewContainer, directionStyles, style]}
-                dataSource={this.state.dataSource}
-                renderRow={(month) => {
-                    return (
-                        <Month
-                            {...this.props}
-                            days={month}
-                            style={[styles.month, directionStyles]}
-                            changeSelection={this.changeSelection}
-                        />
-                    );
-                }}
-            />
-        );
-    }
+	render() {
+		let {style, isFutureDate} = this.props;
+		let directionStyles = {};
+
+		if (!isFutureDate) {
+			directionStyles = {
+				transform: [{scaleY: -1}]
+			}
+		}
+
+		return (
+			<ListView
+				initialListSize={5}
+				scrollRenderAheadDistance={1200}
+				style={[styles.listViewContainer, directionStyles, style]}
+				dataSource={this.state.dataSource}
+				renderRow={(month) => {
+					return (
+						<Month
+							{...this.props}
+							days={month}
+							style={[styles.month, directionStyles]}
+							changeSelection={this.changeSelection}
+						/>
+					);
+				}}
+			/>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-    listViewContainer: {
-        backgroundColor: 'white',
-        alignSelf: 'center',
-    },
-    month: {}
+	listViewContainer: {
+		backgroundColor: 'white',
+		alignSelf: 'center',
+	},
+	month: {}
 });
