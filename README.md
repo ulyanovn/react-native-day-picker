@@ -118,7 +118,7 @@ All properties are optional
 
 - **`dayInRangeTextColor`** _(string)_ — In range day text color.
 
-- **`monthHeaderColor`** _(string)_ — Calendar month header text color.
+- **`monthTextColor`** _(string)_ — Calendar month header text color.
 
 ## Support
 
