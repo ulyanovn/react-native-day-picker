@@ -103,6 +103,8 @@ export default class Calendar extends React.Component {
 	}
 
 	rowHasChanged(r1, r2) {
+		if (!r1 || !r2) return;
+
 		for (var i = 0; i < r1.length; i++) {
 			if (r1[i].status !== r2[i].status && !r1[i].disabled) {
 				return true;
