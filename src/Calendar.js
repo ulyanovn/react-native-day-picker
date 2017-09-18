@@ -2,14 +2,14 @@
 
 import React, {
 	PropTypes
-}               from 'react';
+} from 'react';
 import {
 	ListView,
 	StyleSheet,
-}               from 'react-native';
+	Platform
+} from 'react-native';
 
-import Month    from './Month';
-
+import Month from './Month';
 
 export default class Calendar extends React.Component {
 	static defaultProps = {
@@ -244,7 +244,10 @@ export default class Calendar extends React.Component {
 
 		if (!isFutureDate) {
 			directionStyles = {
-				transform: [{scaleY: -1}]
+				...Platform.select({
+					ios: {transform: [{ scaleY: -1 }]},
+					android: {scaleY: -1}
+				})
 			}
 		}
 
