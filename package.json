@@ -26,5 +26,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ivanchenko/react-native-day-picker.git"
+  },
+  "dependencies": {
+    "prop-types": "^15.7.2"
   }
 }
